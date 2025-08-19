@@ -8,38 +8,41 @@ use tracing_subscriber::{prelude::*, EnvFilter};
 use url::Url;
 
 use crate::{DateTimeCrate, GenerateSubcommands};
+use crate::arguments::generate::GenerateEntityArguments;
 
 pub async fn run_generate_command(
     command: GenerateSubcommands,
     verbose: bool,
 ) -> Result<(), Box<dyn Error>> {
     match command {
-        GenerateSubcommands::Entity {
-            compact_format: _,
-            expanded_format,
-            frontend_format,
-            include_hidden_tables,
-            tables,
-            ignore_tables,
-            max_connections,
-            acquire_timeout,
-            output_dir,
-            database_schema,
-            database_url,
-            with_prelude,
-            with_serde,
-            serde_skip_deserializing_primary_key,
-            serde_skip_hidden_column,
-            with_copy_enums,
-            date_time_crate,
-            lib,
-            model_extra_derives,
-            model_extra_attributes,
-            enum_extra_derives,
-            enum_extra_attributes,
-            seaography,
-            impl_active_model_behavior,
-        } => {
+        GenerateSubcommands::Entity(args) => {
+            let GenerateEntityArguments {
+                compact_format: _,
+                expanded_format,
+                frontend_format,
+                include_hidden_tables,
+                tables,
+                ignore_tables,
+                max_connections,
+                acquire_timeout,
+                output_dir,
+                database_schema,
+                database_url,
+                with_prelude,
+                with_serde,
+                serde_skip_deserializing_primary_key,
+                serde_skip_hidden_column,
+                with_copy_enums,
+                date_time_crate,
+                lib,
+                model_extra_derives,
+                model_extra_attributes,
+                enum_extra_derives,
+                enum_extra_attributes,
+                seaography,
+                impl_active_model_behavior,
+            } = args;
+
             if verbose {
                 let _ = tracing_subscriber::fmt()
                     .with_max_level(tracing::Level::DEBUG)
